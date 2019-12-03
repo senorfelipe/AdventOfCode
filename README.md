@@ -1,2 +1,2 @@
 # AdventOfCode
-some atempts to solve the advent-of-code challange
+some atempts to solve the advent-of-code (https://adventofcode.com/) challange
