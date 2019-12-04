@@ -109,7 +109,7 @@ def calc_fuel(modules):
     fuel = 0
     for i in range(len(modules)):
         a = np.asarray(modules)
-        fuel += int(np.take(a, i) / 3) - 2
+        fuel += np.take(a, i) // 3 - 2
     
     return fuel
 
@@ -120,7 +120,7 @@ def calc_fuel_completely(mass):
     if mass / 3 < 2:
         return 0
     else:
-        fuel = int(mass / 3) - 2
+        fuel = mass // 3 - 2
     return fuel + calc_fuel_completely(fuel)
 fuels = np.asarray(input_modules)
 for i in range(fuels.size):
