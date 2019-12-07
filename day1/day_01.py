@@ -121,11 +121,13 @@ def calc_fuel_completely(mass):
         return 0
     else:
         fuel = mass // 3 - 2
-    return fuel + calc_fuel_completely(fuel)
+    return fuel + calc_fuel_completely(fuel)
+
 fuels = np.asarray(input_modules)
 for i in range(fuels.size):
     fuels[i] = calc_fuel_completely(fuels[i])
-    
+
 print(sum(fuels))
+    
     
         
