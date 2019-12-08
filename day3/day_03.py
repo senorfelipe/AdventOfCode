@@ -1,4 +1,5 @@
 """Day 3: Crossed Wires"""
+import time
 
 # get input
 file = open("./input.txt")
@@ -47,13 +48,9 @@ def get_points_steps_set(wire):
 
 
 def get_intersections(points_steps_1, points_steps_2):
-    points_1 = set()
-    points_2 = set()
-    for val in points_steps_1:
-        points_1.add(val[:2])
-    for val2 in points_steps_2:
-        points_2.add(val2[:2])
-    return points_1.intersection(points_2)
+    points_1 = {val[:2] for val in points_steps_1}
+    points_2 = {val[:2] for val in points_steps_2}
+    return points_1 & points_2
 
 
 def get_lowest_intersection_steps(points_steps_1, points_steps_2):
@@ -103,8 +100,12 @@ intersections = calc_intersection(wire_list_1, wire_list_2)
 # awnser part1
 print("smallest manhatten distance: ", calc_smallest_dis_to_point(intersections))
 
+start = time.time()
 points_steps_wire_1 = get_points_steps_set(wire_list_1)
 points_steps_wire_2 = get_points_steps_set(wire_list_2)
 
 # awnser part2
 print("lowest number of steps: ", get_lowest_intersection_steps(points_steps_wire_1, points_steps_wire_2))
+
+end = time.time()
+print("terminated after: ", end - start, "seconds")
