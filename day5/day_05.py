@@ -1,41 +1,55 @@
 """Day 5: Sunny with a Chance of Asteroids"""
 
 diag_prog_str = open("input.txt").read().split(",")
-# diag_prog_str = "1002,4,3,4,33".split(",")
 diag_prog = [int(val) for val in diag_prog_str]
-print(diag_prog)
 
 
 def opcode_program():
-    instruction = get_instruction([diag_prog[0]])
-    step = get_step(instruction)
     i = 0
-    while i + step <= len(diag_prog) and (diag_prog[i] != 99):
-        instruction = get_instruction([diag_prog[i]])[0]
-        step = get_step(instruction)
+    while diag_prog[i] != 99:
+        opcode = get_opcode([diag_prog[i]])[0]
+        step = get_step(opcode)
         res_idx = diag_prog[i + step - 1]
         param_modes = get_param_modes(diag_prog[i], step)
         params = get_params(i, param_modes)
-        if instruction == 3:
-            input = 1
+        if opcode == 3:
+            input = 5
             diag_prog[res_idx] = input
-        elif instruction == 1:
+        elif opcode == 1:
             diag_prog[res_idx] = params[0] + params[1]
-        elif instruction == 2:
+        elif opcode == 2:
             diag_prog[res_idx] = params[0] * params[1]
-        elif instruction == 4:
+        elif opcode == 4:
             print(params[0])
+        elif opcode == 5:
+            if params[0]:
+                step = params[1] - i
+        elif opcode == 6:
+            if params[0] == 0:
+                step = params[1] - i
+        elif opcode == 7:
+            if params[0] < params[1]:
+                diag_prog[res_idx] = 1
+            else:
+                diag_prog[res_idx] = 0
+        elif opcode == 8:
+            if params[0] == params[1]:
+                diag_prog[res_idx] = 1
+            else:
+                diag_prog[res_idx] = 0
         i += step
 
 
-def get_step(instruction):
-    if instruction == 3 or instruction == 4:
+def get_step(opcode):
+    if opcode == 3 or opcode == 4:
         return 2
+    elif opcode == 5 or opcode == 6:
+        return 3
     else:
         return 4
 
 
-def get_instruction(number_with_instr):
+def get_opcode(number_with_instr):
     if any(c in number_with_instr for c in (1, 2, 3, 4)):
         return number_with_instr
     else:
@@ -52,7 +66,6 @@ def get_param_modes(number_with_param_modes, step):
     return ret
 
 
-
 def get_params(curr_idx, param_modes):
     params = []
     for i, val in enumerate(param_modes):
@@ -63,7 +76,5 @@ def get_params(curr_idx, param_modes):
     return params
 
 
-
-# awser part1
-print(get_param_modes(1101, 4))
-print(opcode_program())
+# awser part1 / part2
+opcode_program()
