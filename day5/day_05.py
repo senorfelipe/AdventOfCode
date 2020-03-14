@@ -1,43 +1,46 @@
 """Day 5: Sunny with a Chance of Asteroids"""
 
-diag_prog_str = open("input.txt").read().split(",")
-diag_prog = [int(val) for val in diag_prog_str]
+prog_str = open("input.txt").read().split(",")
+prog = [int(val) for val in prog_str]
 
 
-def opcode_program():
-    i = 0
-    while diag_prog[i] != 99:
-        opcode = get_opcode([diag_prog[i]])[0]
+def intcode_computer(prog, input):
+    prog_idx = 0
+    input_idx = 0
+    output = []
+    while prog[prog_idx] != 99:
+        opcode = get_opcode([prog[prog_idx]])[0]
         step = get_step(opcode)
-        res_idx = diag_prog[i + step - 1]
-        param_modes = get_param_modes(diag_prog[i], step)
-        params = get_params(i, param_modes)
-        if opcode == 3:
-            input = 5
-            diag_prog[res_idx] = input
+        res_idx = prog[prog_idx + step - 1]
+        param_modes = get_param_modes(prog[prog_idx], step)
+        params = get_params(prog, prog_idx, param_modes)
+        if opcode == 3:  # stores input on address res_idx
+            prog[res_idx] = input[input_idx]
+            input_idx = input_idx + 1
         elif opcode == 1:
-            diag_prog[res_idx] = params[0] + params[1]
+            prog[res_idx] = params[0] + params[1]
         elif opcode == 2:
-            diag_prog[res_idx] = params[0] * params[1]
+            prog[res_idx] = params[0] * params[1]
         elif opcode == 4:
-            print(params[0])
+            output.append(params[0])
         elif opcode == 5:
             if params[0]:
-                step = params[1] - i
+                step = params[1] - prog_idx
         elif opcode == 6:
             if params[0] == 0:
-                step = params[1] - i
+                step = params[1] - prog_idx
         elif opcode == 7:
             if params[0] < params[1]:
-                diag_prog[res_idx] = 1
+                prog[res_idx] = 1
             else:
-                diag_prog[res_idx] = 0
+                prog[res_idx] = 0
         elif opcode == 8:
             if params[0] == params[1]:
-                diag_prog[res_idx] = 1
+                prog[res_idx] = 1
             else:
-                diag_prog[res_idx] = 0
-        i += step
+                prog[res_idx] = 0
+        prog_idx += step
+    return output
 
 
 def get_step(opcode):
@@ -66,15 +69,15 @@ def get_param_modes(number_with_param_modes, step):
     return ret
 
 
-def get_params(curr_idx, param_modes):
+def get_params(prog, curr_idx, param_modes):
     params = []
     for i, val in enumerate(param_modes):
         if param_modes[i] == 0:
-            params += [diag_prog[diag_prog[curr_idx + i + 1]]]
+            params += [prog[prog[curr_idx + i + 1]]]
         else:
-            params += [diag_prog[curr_idx + i + 1]]
+            params += [prog[curr_idx + i + 1]]
     return params
 
 
 # awser part1 / part2
-opcode_program()
+#print(opcode_program(prog, [5]))
