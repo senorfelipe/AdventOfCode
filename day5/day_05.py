@@ -80,4 +80,4 @@ def get_params(prog, curr_idx, param_modes):
 
 
 # awser part1 / part2
-#print(opcode_program(prog, [5]))
+print(intcode_computer(prog, [5]))
