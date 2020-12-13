@@ -4,7 +4,7 @@ def normalize():
 
 
 counter_one = 0
-for line in open('input.txt').readlines():
+for line in open('2.txt').readlines():
     line = normalize()
     limits = list(map(int, line[0].split('-')))
     policy_limits = range(limits[0], limits[1])
@@ -17,7 +17,7 @@ for line in open('input.txt').readlines():
 print(counter_one)
 
 counter_two = 0
-for line in open('input.txt').readlines():
+for line in open('2.txt').readlines():
     line = normalize()
     policy_idxs = list(map(int, line[0].split('-')))
     policy_letter = line[1]

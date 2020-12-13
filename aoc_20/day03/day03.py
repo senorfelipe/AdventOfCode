@@ -1,6 +1,6 @@
 trees = 0
 x, y = 0, 0
-for line in open('input.txt').readlines():
+for line in open('3.txt').readlines():
     line = line.replace('\n', '')
     if line[x] == '#' and y != 0:
         trees += 1
@@ -15,7 +15,7 @@ print('Answer part 1: ' + str(trees))
 
 slopes = [(1, 1), (3, 1), (5, 1), (7, 1), (1, 2)]
 data = []
-for line in open('input.txt').readlines():
+for line in open('3.txt').readlines():
     data.append([a for a in line if a != '\n'])
 
 results = []
