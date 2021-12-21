@@ -4,13 +4,15 @@ from aoc_21.advent_of_code import AoCSolution
 class Day3(AoCSolution):
 
     def part_one(self):
-        most_common = self.get_most_common()
-        least_common = self.get_leat_common()
+        lines = self.calc_common_bits(self.input_lines)
+        most_common = self.get_most_common(lines)
+        least_common = self.get_least_common(lines)
         return int(most_common, 2) * int(least_common, 2)
 
-    def calc_common_bits(self):
-        res = [0] * (len(self.input_lines[0]) - 1)
-        for line in self.input_lines:
+    @staticmethod
+    def calc_common_bits(lines):
+        res = [0] * (len(lines[0]))
+        for line in lines:
             for i in range(0, len(line) - 1):
                 num = int(line[i])
                 if num > 0:
@@ -19,27 +21,48 @@ class Day3(AoCSolution):
                     res[i] -= 1
         return res
 
-    def get_leat_common(self):
-        least_common = ''.join(str(el) for el in [0 if num > 0 else 1 for num in self.calc_common_bits()])
+    @staticmethod
+    def get_least_common(lines):
+        least_common = ''.join(str(el) for el in
+                               [0 if num >= 0 else 1 for num in lines])
         return least_common
 
-    def get_most_common(self):
-        most_common = ''.join(str(el) for el in [1 if num > 0 else 0 for num in self.calc_common_bits()])
+    @staticmethod
+    def get_most_common(lines):
+        most_common = ''.join(
+            str(el) for el in [1 if num >= 0 else 0 for num in lines])
         return most_common
 
     def part_two(self):
-        leat_common = self.get_leat_common()
-        print(self.life_support_rating())
+        return self.oxygen_gen_rating() * self.c02_scrubber_rating()
 
-    def life_support_rating(self):
-        most_common = self.get_most_common()
-        life_support_rating = self.input_lines
-        for i in range(0, len(life_support_rating)):
-            for j in range(0, len(most_common)):
-                if len(life_support_rating) == 1:
-                    return int(life_support_rating[0], 2)
-                if life_support_rating[i][j] != most_common[j]:
-                    life_support_rating.remove(life_support_rating[i])
+    def oxygen_gen_rating(self):
+        life_support_rating = self.input_lines.copy()
+        most_common = self.get_most_common(self.calc_common_bits(life_support_rating))
+        to_remove = []
+        for i in range(0, len(most_common) + 1):
+            [life_support_rating.remove(x) for x in to_remove]
+            if len(life_support_rating) == 1:
+                return int(life_support_rating[0], 2)
+            most_common = self.get_most_common(self.calc_common_bits(life_support_rating))
+            to_remove.clear()
+            for j in range(0, len(life_support_rating)):
+                if life_support_rating[j][i] != most_common[i]:
+                    to_remove.append(life_support_rating[j])
+
+    def c02_scrubber_rating(self):
+        life_support_rating = self.input_lines.copy()
+        least_common = self.get_least_common(self.calc_common_bits(life_support_rating))
+        to_remove = []
+        for i in range(0, len(least_common) + 1):
+            [life_support_rating.remove(x) for x in to_remove]
+            if len(life_support_rating) == 1:
+                return int(life_support_rating[0], 2)
+            least_common = self.get_least_common(self.calc_common_bits(life_support_rating))
+            to_remove.clear()
+            for j in range(0, len(life_support_rating)):
+                if life_support_rating[j][i] != least_common[i]:
+                    to_remove.append(life_support_rating[j])
 
 
 Day3(3, '03.in').solve()
