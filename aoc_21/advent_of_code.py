@@ -3,7 +3,9 @@ import time
 
 class AoCSolution:
 
-    def __init__(self, day, input_file=None):
+    def __init__(self, day=None, input_file=None):
+        if day is None:
+            day = self.__class__.__name__[-1]
         self.day = day
         if input_file is not None:
             self.input_lines = [el.strip() for el in open(input_file).readlines()]
