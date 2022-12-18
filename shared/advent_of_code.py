@@ -1,3 +1,5 @@
+import os
+import sys
 import time
 
 
@@ -8,8 +10,7 @@ class AoCSolution:
             day = self.__class__.__name__[-1]
         self.day = day
         if input_file is not None:
-            self.input_lines = [el.strip()
-                                for el in open(input_file).readlines()]
+            self.input_lines = [el.strip() for el in open(os.path.join(sys.path[0], input_file)).readlines()]
 
     def part_one(self):
         pass
@@ -27,20 +28,12 @@ class AoCSolution:
         duration_two = time.time() - start_two
 
         if sol1 is None:
-            print()
-            print('Solution day ' + str(self.day) +
-                  ' (part 1): Not correctly solved yet.')
-            print()
+            print('Solution day ' + str(self.day) + ' (part 1): Not correctly solved yet.')
         else:
-            print()
             print('Solution day ' + str(self.day) + ' (part 1): ' + str(sol1))
             print('--- %.5f milliseconds ---' % (duration_one * 1000))
-            print()
         if sol2 is None:
-            print('Solution day ' + str(self.day) +
-                  ' (part 2): Not correctly solved yet.')
-            print()
+            print('Solution day ' + str(self.day) + ' (part 2): Not correctly solved yet.')
         else:
             print('Solution day ' + str(self.day) + ' (part 2): ' + str(sol2))
             print('--- %.5f milliseconds ---' % (duration_two * 1000))
-            print()

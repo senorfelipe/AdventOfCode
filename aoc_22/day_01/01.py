@@ -1,13 +1,12 @@
 # TODO use parent class, fix import error
-from advent_of_code import AoCSolution
+from shared.advent_of_code import AoCSolution
 
 
 import os
 import sys
-import time
 
 
-class Day1(AoCSolution):
+class Day01(AoCSolution):
 
     def __init__(self, day=None, input_file=None):
         if day is None:
@@ -44,4 +43,4 @@ class Day1(AoCSolution):
         return sum(calories_per_elfe[-3:])
 
 
-Day1(1, '01.in').solve()
+Day01(1, '01.in').solve()

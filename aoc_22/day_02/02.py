@@ -1,12 +1,8 @@
-import os
-import sys
-import time
 
-# TODO use parent class, fix import error
-from advent_of_code import AoCSolution
+from shared.advent_of_code import AoCSolution
 
 
-class Day2(AoCSolution):
+class Day02(AoCSolution):
 
     shape_map = {"X": "A", "Y": "B", "Z": "C"}
     shape_scores = {"A": 1, "B": 2, "C": 3}
@@ -45,4 +41,4 @@ class Day2(AoCSolution):
         return score
 
 
-Day2(1, '02.in').solve()
+Day02(2, '02.in').solve()
