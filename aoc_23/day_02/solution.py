@@ -1,4 +1,5 @@
 from calendar import c
+from functools import reduce
 from shared.advent_of_code import AoCSolution
 
 
@@ -22,7 +23,22 @@ class Day02(AoCSolution):
         return sum
 
     def part_two(self):
-        return super().part_two()
+        sum_power = 0
+        for game_id, line in enumerate(self.input_lines, 1):
+            print(f"Game {game_id}")
+            fewest_possible = {"red": 0, "green": 0, "blue": 0}
+
+            for game_set in line.split(": ")[1].split("; "):
+                print(game_set)
+                for cubes_to_color in game_set.split(", "):
+                    n_cubes, col = cubes_to_color.split()
+                    if fewest_possible[col] < int(n_cubes):
+                        fewest_possible[col] = int(n_cubes)
+            
+            print(fewest_possible)
+            sum_power += reduce(lambda x, y: x * y, list(fewest_possible.values()))
+            print("=" * 80)
+        return sum_power
 
 
-Day02(2, "./input.txt").solve()
+Day02(2, "./input.txt").solve(2)
